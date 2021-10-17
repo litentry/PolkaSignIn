@@ -4,7 +4,7 @@
 ###
 quick setup
 ```
-npm install -g @vue/cli-service-global
+npm install -g @vue/cli
 
 npm install
 
