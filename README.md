@@ -1,8 +1,10 @@
-# SignerVerify
+# PolkaSignIn
 
+### Background
 
-###
-quick setup
+Web3Grant: https://github.com/w3f/Grants-Program/blob/master/applications/PolkaSignIn.md
+
+### Quick Setup
 ```
 npm install -g @vue/cli
 
