@@ -1,6 +1,7 @@
 <template>
   <div>
-    hello world
+    hello
+    <div class="btn-test" @click="testSigner">test sign</div>
 
     <div v-for="a in allAccounts" :key="a.address">
       {{ a }}
@@ -32,10 +33,11 @@ export default {
       logs: [],
     };
   },
-  mounted() {
-    this.useSigner();
-  },
+  mounted() {},
   methods: {
+    clearLog() {
+      this.logs.length = 0;
+    },
     pushLog(log) {
       this.logs.push(new Date().toISOString() + " " + log);
     },
@@ -59,7 +61,8 @@ export default {
 
       return result;
     },
-    async useSigner() {
+    async testSigner() {
+      this.clearLog();
       const extensions = await web3Enable("my cool dapp");
       console.log(extensions);
       const allAccounts = await web3Accounts();
@@ -80,6 +83,7 @@ export default {
           // we can use it to sign our message
           let accountAddress = account.address;
           let message = accountAddress;
+          message = "challenge message at 20210-11-21 10:00:00";
           this.pushLog("message to sign:" + message);
           let messageEncoded = this.hexEncode(message);
           this.pushLog("message encode:" + messageEncoded);
@@ -93,7 +97,7 @@ export default {
           this.pushLog("message signature:" + signature);
 
           const isValid = await this.isValidSignature(
-            messageEncoded,
+            message,
             signature,
             accountAddress
           );
@@ -105,7 +109,7 @@ export default {
           let messageEncodedFake = this.hexEncode(messageFake);
           this.pushLog("message encode fake:" + messageEncodedFake);
           const isValid_fake = await this.isValidSignature(
-            messageEncodedFake,
+            messageFake,
             signature,
             accountAddress
           );
@@ -113,17 +117,30 @@ export default {
         }
       }
     },
-    async isValidSignature(signedMessage, signature, address) {
+    async isValidSignature(message, signature, address) {
       await cryptoWaitReady();
 
       const publicKey = decodeAddress(address);
       this.pushLog("account address publicKey:" + publicKey);
       const hexPublicKey = u8aToHex(publicKey);
       this.pushLog("account address hexPublicKey:" + hexPublicKey);
-      return signatureVerify(signedMessage, signature, hexPublicKey).isValid;
+      return signatureVerify(this.hexEncode(message), signature, hexPublicKey)
+        .isValid;
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+.btn-test {
+  padding: 5px 10px;
+  border: solid 1px #ccc;
+  width: 80px;
+  margin: 10px 10px;
+  cursor: pointer;
+  background: #ccc;
+}
+.btn-test:hover {
+  background: #ddd;
+}
+</style>
