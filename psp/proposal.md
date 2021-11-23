@@ -44,7 +44,7 @@ Sign-In with Polkadot works as follows:
 
 7. The target service validates the **Signed-Message**. If success, the target service should return the identity info to the client. The identity info SHOULD contain the token or session info so that the client can interaction with server later.
 
-8. The target service may further fetch data associated with the Polkadto address, such as from the Polkadot blockchain (e.g., PNS, Parachain), or other data sources that may or may not be permissioned.
+8. The target service may further fetch data associated with the Polkadot address, such as from the Polkadot blockchain (e.g., PNS, Parachain), or other data sources that may or may not be permissioned.
 
 <!-- ![Sign-in Flow](./imgs/Sign-in-Flow.png) -->
 
@@ -119,7 +119,7 @@ A JSON template of the full message is presented below for readability and ease 
 
 ### Message Field Descriptions
 
-- `identityNetwork` is network name , the payload is required since each chain may has its own algorithmic mechanism. the network name should be the offcial name known by wallet and server-side.
+- `identityNetwork` is network name, the payload is required since each chain may has its own algorithmic mechanism. the network name should be the offcial name known by wallet and server-side.
 
 - `callbackEndpoint` is a url path, the **Signed-Message** will be sent to the path.
 
@@ -133,10 +133,11 @@ A JSON template of the full message is presented below for readability and ease 
 
 #
 
-### Resolving Polkadot Name Service (ENS) Data
+### Resolving external identity Data
 
-- The server or wallet MAY additionally perform resolution of PNS data, as this can improve the user experience by displaying a human-friendly information that is related to the `address`. Resolvable PNS data include:
-  - The [PNS](https://www.pns.link/).
+- The server or wallet MAY additionally perform resolution of identity data, as this can improve the user experience by displaying a human-friendly information that is related to the `address`. Resolvable identity data include:
+  - Identity related-information in identity pallet
+  - The [Polkadot Name System](https://www.pns.link/).
 - If resolution of PNS data is performed, implementers SHOULD take precautions to preserve user privacy and consent, as their `address` could be forwarded to third party services as part of the resolution process.
 
 #
