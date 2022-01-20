@@ -85,13 +85,10 @@ export default {
           let message = accountAddress;
           message = "challenge message at 20210-11-21 10:00:00";
           this.pushLog("message to sign:" + message);
-          let messageEncoded = this.hexEncode(message);
-          this.pushLog("message encode:" + messageEncoded);
-          this.pushLog("message decode check:", this.hexDecode(messageEncoded));
+
           const { signature } = await signRaw({
             address: accountAddress,
-            data: messageEncoded,
-            type: "bytes",
+            data: message,
           });
 
           this.pushLog("message signature:" + signature);
@@ -106,8 +103,7 @@ export default {
           //fake account
           let messageFake = accountAddress + "_fake";
           this.pushLog("message fake:" + messageFake);
-          let messageEncodedFake = this.hexEncode(messageFake);
-          this.pushLog("message encode fake:" + messageEncodedFake);
+
           const isValid_fake = await this.isValidSignature(
             messageFake,
             signature,
@@ -117,15 +113,21 @@ export default {
         }
       }
     },
-    async isValidSignature(message, signature, address) {
+    async isValidSignature(signedMessage, signature, address) {
       await cryptoWaitReady();
-
       const publicKey = decodeAddress(address);
-      this.pushLog("account address publicKey:" + publicKey);
       const hexPublicKey = u8aToHex(publicKey);
-      this.pushLog("account address hexPublicKey:" + hexPublicKey);
-      return signatureVerify(this.hexEncode(message), signature, hexPublicKey)
-        .isValid;
+      console.log(signedMessage);
+      console.log(signature);
+      console.log(hexPublicKey);
+      let isValid = signatureVerify(
+        signedMessage,
+        signature,
+        hexPublicKey
+      ).isValid;
+
+      console.log("isValidSignature:", isValid);
+      return isValid;
     },
   },
 };

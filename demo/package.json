@@ -4,14 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@polkadot/extension-dapp": "^0.40.3",
+    "@polkadot/api": "^6.3.1",
+    "@polkadot/extension-dapp": "0.40.3",
     "@polkadot/util": "^7.4.1",
     "@polkadot/util-crypto": "^7.4.1"
   },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@open-wc/webpack-import-meta-loader": "^0.4.7"
+  }
 }
