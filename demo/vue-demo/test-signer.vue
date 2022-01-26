@@ -1,7 +1,7 @@
 <template>
   <div>
     hello
-    <div class="btn-test" @click="testSigner">test sign</div>
+    <div class="btn-test" @click="TestSigner">test sign</div>
 
     <div v-for="a in allAccounts" :key="a.address">
       {{ a }}
@@ -27,6 +27,7 @@ import {
 import { u8aToHex } from "@polkadot/util";
 
 export default {
+  name: 'TestSigner',
   data() {
     return {
       allAccounts: {},
@@ -61,14 +62,14 @@ export default {
 
       return result;
     },
-    async testSigner() {
+    async TestSigner() {
       this.clearLog();
       const extensions = await web3Enable("my cool dapp");
       console.log(extensions);
       const allAccounts = await web3Accounts();
       this.allAccounts = allAccounts;
       if (this.allAccounts.length) {
-        const account = allAccounts[0];
+        const account = allAccounts[2];
         this.pushLog("account address:" + account.address);
 
         // to be able to retrieve the signer interface from this account

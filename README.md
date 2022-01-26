@@ -1,10 +1,18 @@
 # PolkaSignIn
 
-### Background
+## Background
 
 Web3Grant: https://github.com/w3f/Grants-Program/blob/master/applications/PolkaSignIn.md
 
-### Quick Setup
+## React Demo (NextJS)
+
+```
+yarn
+cd demo/nextjs-demo
+yarn dev
+```
+
+## Vue Demo
 ```
 npm install -g @vue/cli
 

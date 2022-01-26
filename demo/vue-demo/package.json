@@ -7,7 +7,10 @@
     "@polkadot/api": "^6.3.1",
     "@polkadot/extension-dapp": "0.40.3",
     "@polkadot/util": "^7.4.1",
-    "@polkadot/util-crypto": "^7.4.1"
+    "@polkadot/util-crypto": "^7.4.1",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.0.0",
+    "eslint-plugin-vue": "^8.3.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
