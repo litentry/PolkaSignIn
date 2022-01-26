@@ -1,5 +1,6 @@
 {
   "name": "nextjs-demo",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@litentry/polkasignin": "../../package",
+    "@litentry/polkasignin-client": "0.1.0",
     "next": "12.0.8",
     "react": "17.0.2",
     "react-dom": "17.0.2"

@@ -1,8 +1,8 @@
-const withTM = require('next-transpile-modules');
+// const withTM = require('next-transpile-modules');
 
-const withTranspiledModules = withTM([
-  '@litentry/polkasignin',
-]);
+// const withTranspiledModules = withTM([
+//   '@litentry/polkasignin',
+// ]);
 
 
 /** @type {import('next').NextConfig} */

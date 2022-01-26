@@ -1,6 +1,7 @@
 {
-  "name": "@litentry/polkasignin",
-  "version": "1.0.0",
+  "name": "@litentry/polkasignin-client",
+  "private": true,
+  "version": "0.1.0",
   "description": "Package to support authentication with Polkadot accounts.",
   "main": "lib/prefer-es-modules.js",
   "module": "lib/index.js",
