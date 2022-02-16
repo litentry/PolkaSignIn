@@ -1,0 +1,23 @@
+{
+  "name": "@litentry/polkasignin-server",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Package to support authentication with Polkadot accounts.",
+  "main": "lib/prefer-es-modules.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "repository": "https://github.com/litentry/PolkaSignIn",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn clean && tsc --build",
+    "clean": "rm -rf ./lib",
+    "watch": "tsc --watch",
+    "dev": "yarn watch",
+    "postinstall": "yarn build"
+  },
+  "dependencies": {
+    "@polkadot/extension-dapp": "^0.42.7",
+    "@polkadot/util": "^8.3.3",
+    "@polkadot/util-crypto": "^8.3.3"
+  }
+}
