@@ -13,6 +13,9 @@ const Home: NextPage = () => {
   const [selectedAccount, setSelectedAccount] =
     React.useState<InjectedAccountWithMeta>();
 
+  // injectAccounts triggers a permissions request from the polkadot extension
+  // in this example we use inject/setInject to allow control over when to trigger
+  // the permissions request
   React.useEffect(() => {
     if (inject) {
       injectAccounts('nextjs-demo').then(setAccounts);
