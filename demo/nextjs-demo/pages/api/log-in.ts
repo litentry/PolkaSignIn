@@ -7,13 +7,10 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { address, challenge, signedMesasge } = req.body;
+  // validate the payload
+  const { address, signedMesasge } = req.body;
   if (!address) {
     res.status(400).json({ message: 'address is required' });
-    return;
-  }
-  if (!challenge) {
-    res.status(400).json({ message: 'challenge is required' });
     return;
   }
   if (!signedMesasge) {
@@ -21,13 +18,15 @@ export default async function handler(
     return;
   }
 
-  const valid = await validateSignature(address, challenge, signedMesasge);
+  // verify the signature (see ./challenge.ts for information on managing challenges)
+  const valid = await validateSignature(address, 'DONT USE ME', signedMesasge);
 
   if (!valid) {
     res.status(401).json({ message: 'Unauthorized' });
     return;
   }
 
+  // issue a token for the user to make authenticated requests to the rest of your applicationn with
   const token = jwt.sign(
     {
       address,

@@ -25,13 +25,16 @@ const Home: NextPage = () => {
 
   React.useEffect(() => {
     async function authenticate(account: InjectedAccountWithMeta) {
+      // get the challenge
       const challengeResponse = await fetch('/api/challenge', {
         method: 'GET',
       });
       const { challenge } = await challengeResponse.json();
 
+      // sign the challenge
       const signedMesasge = await signChallenge(account, challenge);
 
+      // log in
       const logInResponse = await fetch('/api/log-in', {
         method: 'POST',
         headers: {
@@ -40,7 +43,6 @@ const Home: NextPage = () => {
         },
         body: JSON.stringify({
           address: account.address,
-          challenge,
           signedMesasge,
         }),
       });
