@@ -58,7 +58,7 @@ const logInResponse = await fetch('https://your-server-domain/log-in', {
 const { token } = await logInResponse.json();
 ```
 
-### Server Side Implementation
+## Server Side Implementation
 
 The implementation of the challenge request handler is currently the responsibility of the developer implementing the server side of PolkaSignIn. The challenge string must be rotated and unpredictable, then if anybody gets hold of the signed message it cannot be used to log in again once the challenge is rotated.
 
