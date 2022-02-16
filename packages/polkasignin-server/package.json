@@ -1,5 +1,5 @@
 {
-  "name": "@litentry/polkasignin-client",
+  "name": "@litentry/polkasignin-server",
   "private": true,
   "version": "0.1.0",
   "description": "Package to support authentication with Polkadot accounts.",

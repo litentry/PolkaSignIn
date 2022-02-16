@@ -3,12 +3,13 @@ import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import Head from 'next/head';
 import Image from 'next/image';
 import React from 'react';
+import jwt from 'jsonwebtoken';
 import { injectAccounts, signChallenge } from '@litentry/polkasignin-client';
 import styles from '../styles/Home.module.css';
 
 const Home: NextPage = () => {
+  const [token, setToken] = React.useState<string>();
   const [inject, setInject] = React.useState(false);
-  const [signature, setSignature] = React.useState<string>();
   const [accounts, setAccounts] = React.useState<InjectedAccountWithMeta[]>();
   const [selectedAccount, setSelectedAccount] =
     React.useState<InjectedAccountWithMeta>();
@@ -23,10 +24,32 @@ const Home: NextPage = () => {
   }, [inject]);
 
   React.useEffect(() => {
+    async function authenticate(account: InjectedAccountWithMeta) {
+      const challengeResponse = await fetch('/api/challenge', {
+        method: 'GET',
+      });
+      const { challenge } = await challengeResponse.json();
+
+      const signedMesasge = await signChallenge(account, challenge);
+
+      const logInResponse = await fetch('/api/log-in', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: account.address,
+          challenge,
+          signedMesasge,
+        }),
+      });
+      const { token: _token } = await logInResponse.json();
+      setToken(_token);
+    }
+
     if (selectedAccount) {
-      signChallenge(selectedAccount, 'challenge')
-        .then(setSignature)
-        .catch(() => alert('Failed to sign'));
+      authenticate(selectedAccount);
     }
   }, [selectedAccount]);
 
@@ -73,7 +96,12 @@ const Home: NextPage = () => {
               : null}
           </select>
         )}
-        {signature && <p>SIGNATURE: {signature}</p>}
+        {token && (
+          <div style={{ wordWrap: 'break-word', width: 500, maxWidth: '100%' }}>
+            token decoded:
+            <pre>{JSON.stringify(jwt.decode(token), null, 2)}</pre>
+          </div>
+        )}
       </main>
 
       <footer className={styles.footer}>
