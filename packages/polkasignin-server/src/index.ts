@@ -1,1 +1,3 @@
-export { validateSignature } from './validate-signanture';
+import { signIn } from './sign-in';
+
+export default signIn;

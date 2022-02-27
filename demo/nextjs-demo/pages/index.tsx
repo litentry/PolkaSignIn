@@ -32,10 +32,10 @@ const Home: NextPage = () => {
       const { challenge } = await challengeResponse.json();
 
       // sign the challenge
-      const signedMesasge = await signChallenge(account, challenge);
+      const signedMessage = await signChallenge(account, challenge);
 
       // log in
-      const logInResponse = await fetch('/api/log-in', {
+      const signInResponse = await fetch('/api/sign-in', {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -43,10 +43,10 @@ const Home: NextPage = () => {
         },
         body: JSON.stringify({
           address: account.address,
-          signedMesasge,
+          signedMessage,
         }),
       });
-      const { token: _token } = await logInResponse.json();
+      const { token: _token } = await signInResponse.json();
       setToken(_token);
     }
 
