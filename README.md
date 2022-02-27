@@ -44,7 +44,7 @@ const signedMesasge = await signChallenge(account, challenge);
 Log in to the server:
 
 ```typescript
-const logInResponse = await fetch('https://your-server-domain/log-in', {
+const signInResponse = await fetch('https://your-server-domain/sign-in', {
   method: 'POST',
   headers: {
     Accept: 'application/json',
@@ -55,7 +55,7 @@ const logInResponse = await fetch('https://your-server-domain/log-in', {
     signedMesasge,
   }),
 });
-const { token } = await logInResponse.json();
+const { token } = await signInResponse.json();
 ```
 
 ## Server Side Implementation
@@ -80,7 +80,7 @@ async function handler(
 }
 ```
 
-The log in handler is very straightforward. Just validate the signed message and issue a token:
+The sign in handler in your application should use the `signIn` method to validate the signature and fetch the user's identity from the chain specified
 
 ```typescript
 async function handler(
@@ -91,18 +91,27 @@ async function handler(
 
   // get challenge (checking expiry) from your data store
 
-  const valid = await validateSignature(address, 'CHALLENGE', signedMesasge);
+  const { error, identity } = await signIn({
+    address,
+    message: 'DONT USE ME',
+    signedMessage,
+    provider: 'wss://polkadot.api.onfinality.io/public-ws',
+  });
 
-  if (!valid) {
-    res.status(401).json({ message: 'Unauthorized' });
+  if (error) {
+    res.status(401).json(error);
     return;
   }
 
-  const token = jwt.sign(
-    { address },
-    'SECRET',
-    { expiresIn: '1hr' }
-  );
+  if (!identity) {
+    res.status(500).json({ message: 'Failed to fetch identity' });
+    return;
+  }
+
+  // issue a token for the user to make authenticated requests to the rest of your applicationn with
+  const token = jwt.sign(identity, 'SECRET', {
+    expiresIn: '1hr',
+  });
 
   res.status(200).json({ token });
 }
