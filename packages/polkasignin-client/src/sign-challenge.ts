@@ -22,10 +22,8 @@ export async function signChallenge(
 
   const injector = await web3FromSource(account.meta.source);
 
-  const signRaw = injector?.signer?.signRaw as SignRaw | undefined;
-
-  if (signRaw) {
-    const { signature } = await signRaw({
+  if (injector.signer.signRaw) {
+    const { signature } = await injector.signer.signRaw({
       type: 'payload',
       address: account.address,
       data: challenge,
