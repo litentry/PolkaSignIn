@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.1.0",
   "description": "Package to support authentication with Polkadot accounts.",
-  "main": "lib/prefer-es-modules.js",
+  "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "repository": "https://github.com/litentry/PolkaSignIn",
